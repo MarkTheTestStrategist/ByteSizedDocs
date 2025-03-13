@@ -7,7 +7,8 @@ Documents that include cheatsheets, how to guides and anything else of relevance
 - [API Testing CheatSheet](https://raw.githubusercontent.com/MarkTheTestStrategist/ByteSizedDocs/refs/heads/main/API/API%20Testing%20CheatSheet.md)
 - [API Testing Principles](https://raw.githubusercontent.com/MarkTheTestStrategist/ByteSizedDocs/refs/heads/main/API/API%20Testing%20Principles.md)
 - [API Parameters - Sorting](https://raw.githubusercontent.com/MarkTheTestStrategist/ByteSizedDocs/refs/heads/main/API/API%20Parameters%20-%20Sorting.md)
+- [API Troubleshooting](https://github.com/MarkTheTestStrategist/ByteSizedDocs/blob/main/API/API_Troubleshooting.md)
 
 ## LimitBreakers
 - [Phone Numbers Boundaries](https://github.com/MarkTheTestStrategist/ByteSizedDocs/blob/main/LimitBreakers/Phone%20Numbers%20Boundaries.md)
-- 
+- [ISO Standards](https://raw.githubusercontent.com/MarkTheTestStrategist/ByteSizedDocs/refs/heads/main/LimitBreakers/ISO_Standards.md)
