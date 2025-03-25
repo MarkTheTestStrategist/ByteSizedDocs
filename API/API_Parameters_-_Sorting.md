@@ -23,4 +23,4 @@ GET /users?sort_by=-last_modified,+email
 ```
 
 ## Resource(s)
-- REST API Design Filtering Sorting & Pagination
+- [REST API Design Filtering Sorting & Pagination](https://www.moesif.com/blog/technical/api-design/REST-API-Design-Filtering-Sorting-and-Pagination/)
