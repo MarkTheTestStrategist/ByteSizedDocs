@@ -1,183 +1,135 @@
+
+---
 Response
-
-- Time
-- Code
-- Status
-
-
-JSON Body
-
-- Add ghost keys and values
-	- Accepted just ignored
-- Send request with no body
-	- 400 bad request should be returned
-- Remove Mandatory keys & values
-	- 400 bad request
-- Send request with only mandatory keys & values
-- Id's
-	- Use the same id for all id requirements where the id is different.
-
-
+- Time: Verify response time meets performance criteria.
+- Code: Confirm the HTTP status code is correct.
+- Status: Check that the response status/message is as expected.
+---
+JSON Request Body
+- Extra (Ghost) Keys/Values:
+	- Include extra keys/values and verify they are accepted but ignored.
+- No Body:
+	- Send an empty body and expect a 400 Bad Request.
+- Missing Mandatory Keys/Values:
+	- Omit required keys and expect a 400 Bad Request.
+- Only Mandatory Keys:
+	- Send only required keys/values and verify proper processing.
+- IDs:
+	- Use the same ID for all ID fields if required by the contract.
+---
 Key Values
-
-- Min Length
-- Max Length
-- Where it is an ID with a specific length, change the format but keep the same length
-- Leave strings blank : ""
-
-
+- Length Validation:
+	- Verify minimum and maximum lengths.
+	- For IDs with fixed lengths, change the format while keeping the length.
+- Blank Strings:
+	- Test with empty strings (e.g., "") to see how they are handled.
+---
 Parameters
-
-- Page Size
-	- What is the max page size?
-	- Test between the min and max sizes
-	- Test outside the min and max sizes
-- Page
-	- What is the maximum page number?
-	- Minimum will start at zero
-	- Test between minimum and maximum
-	- Test minus values
-- Ghost Values
-	- Example: -
-		- Key: Something
-		- Value: Something
-- SortBY
-	- Asc
-	- Desc
-	- Relevance
-	- Check where names start with caps and those with lowercase are being sorted correctly.
-	- Check where names begin with symbols or numbers are being sorted correctly.
-
-
+- Page Size:
+	- Determine the maximum allowed value.
+	- Test values within and outside the allowed range.
+- Page Number:
+	- Confirm the minimum is 0 and validate upper limits and negative values.
+- Ghost Values:
+	- Provide extra key-value pairs to ensure they’re ignored.
+- SortBy:
+	- Test sort orders (ascending, descending, relevance).
+	- Verify sorting works correctly for names with different cases, symbols, or numbers.
+---
 URL
-
-- Incorrect URL
-- Incorrect id's where id's are included in the URL
-- Spaces in the URL
-
-
+- Malformed URLs:
+	- Test with incorrect URLs or IDs embedded in the URL.
+- Spaces:
+	- Ensure that URLs with spaces are handled correctly.
+---
 Pagination
-
-- Minus values
-- Exact minimum value
-- Exact maximum value
-- Exceed maximum value
-- Value with decimal point
-- A very long value
-
-
+- Boundary Values:
+	- Negative numbers, exact minimum, exact maximum, and exceeding maximum values.
+	- Decimal numbers and excessively long numeric values.
+---
 Authentication
-
-- Refresh Token
-	- Try to refresh token when valid
-	- Try to refresh token when expired
-	- Submit request without refresh token present
-	- Submit request with an invalid token
-- Access Token
-	- Check all values are present in the token
-		- Examples:
-			- iat = issued at
-			- exp = expiry time
-			- nbf = not valid before
-			- iss = Issuer. Who created and signed this token
-			- alg = encryption or signature algorithm
-			- typ = Type of token e.g. Bearer
-	- Try with an invalid token
-	- Try with an expired token
-
-
+- Refresh Token:
+	- Valid refresh token.
+	- Expired refresh token.
+	- Request without a refresh token.
+	- Invalid refresh token.
+- Access Token:
+	- Verify required fields are present (iat, exp, nbf, iss, alg, typ).
+	- Test with invalid and expired tokens.
+---
+Authentication Types
+- Basic Authorization (username/password).
+- Bearer Token (OAuth 2.0).
+- API Key.
+---
 Search Endpoints
-
-- Enter single words
-- Enter words with spaces
-- Add spaces before and after words
-
-
+- Single words.
+- Multiple words with spaces.
+- Spaces before and after the search terms.
+---
 Email Addresses
-
-- Validation
-	- correct syntax, so minimum would be a@a.uk
-	- enter space before and after email
-	- enter space within email
-
-
+- Validate correct syntax (e.g., minimal valid: a@a.uk).
+- Test with spaces before, after, and within the email.
+---
 Telephone Numbers
-
-- Max 11 Chars
-- spaces
-- Plus Sign +
-- Brackets (UK)
-
-
+- Maximum of 11 characters.
+- Handling of spaces, plus sign (+), and brackets (e.g., UK format).
+---
 Duplication
-
-- Can the same record be added again
-
-
+- Verify whether duplicate records can be added.
+---
 Arrays
-
-- Min Items
-- Max Items
-- Item types
-
-
+- Validate the minimum and maximum number of items.
+- Ensure each item is of the correct data type.
+---
 Boolean
-
-- can only be true or false
-
-
+- Accept only true or false values.
+---
 Text
-
-- Mixed Casing
-- Alphabetic
-- Alphanumeric
-- Symbols
-- Kanji
-- Umlauts
-- HTML
-- JavaScript
-
-
+- Test with mixed casing, alphabetic, alphanumeric characters.
+- Include symbols, Kanji, umlauts.
+- Check handling of HTML and JavaScript content.
+---
 Dates
-
-- Validate the implemented date format
-- Use other date formats such as...
-	- ISO 8601
-- Remove the time zone & keep the rest from the ISO date format
-- Remove the time from & keep the rest from the ISO date format
-- Remove the date from & keep the rest from the ISO date format
-
-
+- Validate the implemented date format.
+- Test alternative formats (e.g., ISO 8601).
+- Remove parts of the ISO date (time zone, time, or date) and verify behavior.
+---
 Colour
-
-- Max hexacode is 9 (8 digits and one hash)
-
-
-Security Tests
-
-- SQL Injection: Try entering SQL commands in text fields.
-- XSS (Cross-Site Scripting): Input <script>alert('XSS')</script> in request parameters.
-- Authentication Bypass: Try accessing protected endpoints without authentication.
-- Rate Limiting: Send a high volume of requests to check API throttling.
-
-
-Performance Tests
-
-- Load Testing: Simulate high user load and measure response time.
-- Stress Testing: Overload the API to determine breaking points.
-- Spike Testing: Send traffic spikes to observe system stability.
-
-
-Negative Testing
-
-- Incorrect Content-Type: Send requests with an unsupported Content-Type.
-- Large Payloads: Test with excessively large request bodies.
-- Special Characters: Include emojis, accents, and Unicode characters.
-- Empty Headers: Remove essential headers and test API behavior.
-
-
-Integration & Contract Testing
-
-- Dependency Failures: Simulate failures in third-party services.
-- Backward Compatibility: Ensure old API versions still work after updates.
-
+- Validate hexadecimal color codes (max 9 characters: one hash + 8 digits).
+---
+Methods
+- Change the HTTP method (e.g., to PUT/DELETE on a GET-only endpoint) to expect a 405 Method Not Allowed.
+---
+Contract Verification
+- Request:
+	- Send all allowed properties with values and verify that the response contains the expected data.
+- Schema:
+	- Validate that the JSON/XML response adheres to the defined schema, including required fields and data types.
+---
+Response Body
+- Ensure the returned JSON/XML is formatted correctly.
+- Confirm that all expected properties and values are present.
+---
+Error Messages
+- Ensure error messages are clear, descriptive, and provide actionable guidance when issues occur.
+- Confirm that similar error scenarios produce consistent messages across the API.
+---
+Headers
+- Request Headers:
+	- Verify that all required request headers (e.g., Content-Type, Accept, Authorization) are present and correctly formatted.
+- Response Headers:
+	- Ensure responses include expected headers such as Cache-Control, X-Correlation-ID, or custom headers defined in the contract.
+---
+Rate Limiting & Throttling
+- Verify that when the API is hit with excessive requests, it returns a 429 Too Many Requests status.
+- Check that any rate limit headers (if provided) correctly indicate the remaining quota and reset time.
+---
+Idempotency
+- For safe and repeatable operations (e.g., GET, PUT, DELETE), test that repeated requests produce consistent results.
+- Validate that endpoints marked as idempotent in the contract behave accordingly when the same request is sent multiple times.
+---
+CORS (Cross-Origin Resource Sharing)
+- Confirm that the API returns the proper CORS headers (e.g., Access-Control-Allow-Origin) when accessed from different origins.
+- Test scenarios with various origins to ensure cross-domain requests are handled as specified.
+---
