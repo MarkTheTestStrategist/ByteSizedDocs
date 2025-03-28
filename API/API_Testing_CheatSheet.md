@@ -1,138 +1,231 @@
+# API Testing Cheat-Sheet
+
 ## Overview
 
-This cheatsheet is designed to serve as a quick reference guide for testing API endpoint contracts. It covers everything from validating response codes, status, and performance metrics to ensuring that request bodies, headers, parameters, and URLs conform to the defined specifications. It also addresses more advanced aspects like authentication, rate limiting, idempotency, and CORS, while detailing best practices for handling edge cases in data types such as text, dates, and color codes. Use this guide to ensure consistent, reliable, and secure API behavior across all scenarios.
+This cheat-sheet is designed to serve as a quick reference guide for testing API endpoint contracts. It covers everything from validating response codes, status, and performance metrics to ensuring that request bodies, headers, parameters, and URLs conform to the defined specifications. It also addresses more advanced aspects like authentication, rate limiting, idempotency, and CORS, while detailing best practices for handling edge cases in data types such as text, dates, and color codes. Use this guide to ensure consistent, reliable, and secure API behavior across all scenarios.
 
 ---
-### Response
-- Time: Verify response time meets performance criteria.
-- Code: Confirm the HTTP status code is correct.
-- Status: Check that the response status/message is as expected.
+
+### 1. Response
+
+- Time:
+	- Verify that the response time meets performance criteria.
+- Code:
+	- Confirm the HTTP status code is correct.
+		- Examples:
+			- 200 OK: Request was successful (e.g., GET returns data).
+			- 201 Created: A new resource was successfully created (e.g., POST).
+			- 400 Bad Request: The request is malformed, missing mandatory fields, or contains invalid values.
+			- 401 Unauthorized / 403 Forbidden: Authentication failed or the client does not have permission.
+			- 404 Not Found: The requested resource does not exist.
+			- 405 Method Not Allowed: An unsupported HTTP method was used (e.g., PUT on a GET-only endpoint).
+			- 409 Conflict: A duplicate record or conflicting data exists.
+			- 429 Too Many Requests: Rate limiting has been triggered.
+			- 500 Internal Server Error: An unexpected error occurred on the server.
+			- 501 Not Implemented: The server does not support the requested functionality.
+- Status Message:
+	- Verify that the response status/message is as expected.
 ---
-### JSON Request Body
+
+### 2. JSON Request Body
+
 - Extra (Ghost) Keys/Values:
-	- Include extra keys/values and verify they are accepted but ignored.
+	- Include additional keys/values and verify they are accepted but ignored by the API.
 - No Body:
 	- Send an empty body and expect a 400 Bad Request.
 - Missing Mandatory Keys/Values:
 	- Omit required keys and expect a 400 Bad Request.
 - Only Mandatory Keys:
-	- Send only required keys/values and verify proper processing.
+	- Send only the required keys/values and verify proper processing.
 - IDs:
-	- Use the same ID for all ID fields if required by the contract.
+	- When the contract requires it, use the same ID for all ID fields.
 ---
-### Key Values
+
+### 3. Key Values
+
 - Length Validation:
-	- Verify minimum and maximum lengths.
-	- For IDs with fixed lengths, change the format while keeping the length.
+	- Verify minimum and maximum allowed lengths.
+	- For IDs with fixed lengths, alter the format (if applicable) while maintaining the required length.
 - Blank Strings:
-	- Test with empty strings (e.g., "") to see how they are handled.
+	- Test with empty strings (e.g., "") and observe how they are handled.
 ---
-### Parameters
+
+### 4. Parameters
+
 - Page Size:
-	- Determine the maximum allowed value.
-	- Test values within and outside the allowed range.
+	- Determine and test the maximum allowed page size, as well as values within and outside the allowed range.
 - Page Number:
-	- Confirm the minimum is 0 and validate upper limits and negative values.
+	- Confirm the minimum is 0; test for upper limits and negative values.
 - Ghost Values:
-	- Provide extra key-value pairs to ensure they’re ignored.
+	- Provide extra key-value pairs to ensure they are ignored.
 - SortBy:
-	- Test sort orders (ascending, descending, relevance).
-	- Verify sorting works correctly for names with different cases, symbols, or numbers.
+	- Test sorting in ascending, descending, and relevance orders.
+	- Validate sorting for names containing different cases, symbols, or numbers.
 ---
-### URL
+
+### 5. URL
+
 - Malformed URLs:
-	- Test with incorrect URLs or IDs embedded in the URL.
+	- Test with incorrect URL formats or with invalid IDs embedded in the URL.
 - Spaces:
-	- Ensure that URLs with spaces are handled correctly.
+	- Ensure that URLs containing spaces are properly handled (encoded if necessary).
 ---
-### Pagination
+
+### 6. Pagination
+
 - Boundary Values:
-	- Negative numbers, exact minimum, exact maximum, and exceeding maximum values.
-	- Decimal numbers and excessively long numeric values.
+	- Test with negative numbers, the exact minimum, the exact maximum, and values exceeding the maximum.
+	- Also test with decimal numbers and overly long numeric values.
 ---
-### Authentication
+
+### 7. Authentication
+
 - Refresh Token:
-	- Valid refresh token.
-	- Expired refresh token.
-	- Request without a refresh token.
-	- Invalid refresh token.
+	- Valid refresh token: Ensure processing works as expected.
+	- Expired refresh token: Expect an appropriate error (e.g., 401 Unauthorized).
+	- No refresh token: Validate that the request is rejected.
+	- Invalid refresh token: Check for error handling.
 - Access Token:
-	- Verify required fields are present (iat, exp, nbf, iss, alg, typ).
-	- Test with invalid and expired tokens.
+	- Verify that required fields (e.g., iat, exp, nbf, iss, alg, typ) are present.
+	- Test with invalid or expired tokens.
 ---
-### Authentication Types
-- Basic Authorization (username/password).
-- Bearer Token (OAuth 2.0).
-- API Key.
+
+### 8. Authentication Types
+
+- Basic Authorization:
+	- Test using username/password.
+- Bearer Token:
+	- Validate OAuth 2.0 token scenarios.
+- API Key:
+	- Ensure proper API key handling.
 ---
-### Search Endpoints
-- Single words.
-- Multiple words with spaces.
-- Spaces before and after the search terms.
+
+### 9. Search Endpoints
+
+- Search Terms:
+	- Single words, multiple words with spaces, and terms with leading/trailing spaces.
 ---
-### Email Addresses
-- Validate correct syntax (e.g., minimal valid: a@a.uk).
-- Test with spaces before, after, and within the email.
+
+### 10. Email Addresses
+
+- Syntax Validation:
+	- Verify the correct format (e.g., minimal valid: a@a.uk).
+	- Test with spaces before, after, and within the email address.
 ---
-### Telephone Numbers
-- Maximum of 11 characters.
-- Handling of spaces, plus sign (+), and brackets (e.g., UK format).
+
+### 11. Telephone Numbers
+
+- General Rules:
+	- Validate a maximum of 11 characters (adjust as per the API's specific contract).
+- Formatting:
+	- Test handling of spaces, plus signs (+), and brackets.
+- Country-Specific Examples:
+	- UK: Phone numbers should typically start with +44 followed by the national number (e.g., +44 20 7946 0958).
+	- China: Validate numbers starting with +86 and follow local formatting conventions (e.g., +86 10 1234 5678).
 ---
-### Duplication
-- Verify whether duplicate records can be added.
+
+### 12. Duplication
+
+- Record Duplication:
+	- Verify whether duplicate records can be added, and ensure the API returns a proper error (e.g., 409 Conflict) if duplicates are not allowed.
 ---
-### Arrays
-- Validate the minimum and maximum number of items.
-- Ensure each item is of the correct data type.
+
+### 13. Arrays
+
+- Item Count:
+	- Validate the minimum and maximum number of items.
+	- Ensure each item in the array is of the correct data type.
 ---
-### Boolean
-- Accept only true or false values.
+
+### 14. Boolean
+
+- Validation:
+	- Accept only true or false values. Test that any other values are rejected.
 ---
-### Text
-- Test with mixed casing, alphabetic, alphanumeric characters.
-- Include symbols, Kanji, umlauts.
-- Check handling of HTML and JavaScript content.
+
+### 15. Text
+
+- Input Variety:
+	- Test with mixed casing, alphabetic, and alphanumeric characters.
+	- Include symbols, Kanji, umlauts, etc.
+	- Check how HTML and JavaScript content are handled.
 ---
-### Dates
-- Validate the implemented date format.
-- Test alternative formats (e.g., ISO 8601).
-- Remove parts of the ISO date (time zone, time, or date) and verify behavior.
+
+### 16. Dates
+
+- Date Format:
+	- Validate that dates conform to the implemented format (e.g., ISO 8601).
+	- Test alternative formats and partial dates (omitting time zone, time, or date components) to verify behavior.
 ---
-### Colour
-- Validate hexadecimal color codes (max 9 characters: one hash + 8 digits).
+
+### 17. Colour
+
+- Hexadecimal Codes:
+	- Validate hexadecimal color codes with a maximum of 9 characters (one hash # plus up to 8 digits).
 ---
-### Methods
-- Change the HTTP method (e.g., to PUT/DELETE on a GET-only endpoint) to expect a 405 Method Not Allowed.
+
+### 18. HTTP Methods
+
+- Method Change:
+	- Attempt to use incorrect HTTP methods (e.g., PUT/DELETE on a GET-only endpoint) and expect a 405 Method Not Allowed response.
 ---
-### Contract Verification
-- Request:
+
+### 19. Contract Verification
+
+- Data Contracts:
+	- Mandatory vs. Optional Fields:
+		- Clearly document which fields are mandatory and which are optional.
+		- Example:
+			- Mandatory: userId, email, password
+			- Optional: middleName, nickname, secondaryPhone
+	- Schema Verification:
+		- Validate that the JSON/XML response adheres to the defined schema, including required fields and data types.
+- Request and Response:
 	- Send all allowed properties with values and verify that the response contains the expected data.
-- Schema:
-	- Validate that the JSON/XML response adheres to the defined schema, including required fields and data types.
+	- Confirm that the returned JSON/XML is correctly formatted with all expected properties and values.
 ---
-### Response Body
-- Ensure the returned JSON/XML is formatted correctly.
-- Confirm that all expected properties and values are present.
+
+### 20. Error Messages
+
+- Clarity and Consistency:
+	- Ensure error messages are clear, descriptive, and provide actionable guidance.
+	- Validate that similar error scenarios produce consistent messages across the API.
 ---
-### Error Messages
-- Ensure error messages are clear, descriptive, and provide actionable guidance when issues occur.
-- Confirm that similar error scenarios produce consistent messages across the API.
----
-### Headers
+
+### 21. Headers
+
 - Request Headers:
-	- Verify that all required request headers (e.g., Content-Type, Accept, Authorization) are present and correctly formatted.
+	- Verify that all required headers (e.g., Content-Type, Accept, Authorization) are present and correctly formatted.
 - Response Headers:
-	- Ensure responses include expected headers such as Cache-Control, X-Correlation-ID, or custom headers defined in the contract.
+	- Check for expected headers such as Cache-Control, X-Correlation-ID, or any custom headers defined in the contract.
 ---
-### Rate Limiting & Throttling
-- Verify that when the API is hit with excessive requests, it returns a 429 Too Many Requests status.
-- Check that any rate limit headers (if provided) correctly indicate the remaining quota and reset time.
+
+### 22. Rate Limiting & Throttling
+
+- Excessive Requests:
+	- Confirm that the API returns a 429 Too Many Requests status when hit with excessive requests.
+	- Verify that any provided rate limit headers correctly indicate the remaining quota and reset time.
 ---
-### Idempotency
-- For safe and repeatable operations (e.g., GET, PUT, DELETE), test that repeated requests produce consistent results.
-- Validate that endpoints marked as idempotent in the contract behave accordingly when the same request is sent multiple times.
+
+### 23. Idempotency
+
+- Consistent Results:
+	- For safe and repeatable operations (e.g., GET, PUT, DELETE), ensure that repeated requests produce consistent results.
+	- Validate that endpoints marked as idempotent in the contract behave as expected when the same request is sent multiple times.
 ---
-### CORS (Cross-Origin Resource Sharing)
-- Confirm that the API returns the proper CORS headers (e.g., Access-Control-Allow-Origin) when accessed from different origins.
-- Test scenarios with various origins to ensure cross-domain requests are handled as specified.
+
+### 24. CORS (Cross-Origin Resource Sharing)
+
+- CORS Headers:
+	- Verify that the API returns the proper CORS headers (e.g., Access-Control-Allow-Origin) when accessed from different origins.
+	- Test with various origins to ensure cross-domain requests are handled according to the specification.
+---
+
+### Additional Resources
+
+- [Standard HTTP/HTTPS Response Codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status)
+- Country-Specific Data:
+	- When validating addresses, consider local postal code formats (e.g., UK postal codes or Chinese regional codes) and other country-specific address components.
+- Data Contracts:
+	- Ensure data contracts include detailed definitions of each field, indicating which are mandatory and which are optional. Use JSON Schema or similar tools for robust contract validation.
 ---
