@@ -13,4 +13,4 @@ Documents that include cheatsheets, how to guides and anything else of relevance
 
 ## LimitBreakers
 - [Phone Numbers Boundaries](https://github.com/MarkTheTestStrategist/ByteSizedDocs/blob/main/LimitBreakers/Phone_Numbers_Boundaries.md)
-- [ISO Standards](https://raw.githubusercontent.com/MarkTheTestStrategist/ByteSizedDocs/blob/main/LimitBreakers/ISO_Standards.md)
+- [ISO Standards](https://github.com/MarkTheTestStrategist/ByteSizedDocs/blob/main/LimitBreakers/ISO_Standards.md)
