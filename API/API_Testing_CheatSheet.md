@@ -1,4 +1,4 @@
-# API Testing Cheat-Sheet
+﻿# API Testing Cheat-Sheet
 
 ## Overview
 
@@ -221,21 +221,20 @@ This cheat-sheet is designed to serve as a quick reference guide for testing API
 ---
 
 ### 25. Addresses
-- **Valid address**: `{"address":"1600 Amphitheatre Parkway, Mountain View, CA"} -H "Content-Type: application/json"` ? expect 200 OK and parsed address object in response
-- **Non-existent address**: `{"address":"1234 ThisStreet DoesNotExist, ZZ"} -H "Content-Type: application/json"` ? expect 422 Unprocessable Entity with error �Address not found�
-- **Missing �address� field**: `{}` -H "Content-Type: application/json" ? expect 400 Bad Request and validation error mentioning �address is required�
-- **Empty address string**: `{"address":""} -H "Content-Type: application/json"` ? expect 400 Bad Request and �Address cannot be empty�
-- **Whitespace-only address**: `{"address":"    "} -H "Content-Type: application/json"` ? expect 400 Bad Request and �Address cannot be blank�
-- **Overly long address (>255 chars)**: `{"address":"<256-char string>"} -H "Content-Type: application/json"` ? expect 413 Payload Too Large or 400 Bad Request with �Address too long�
-- **Malformed JSON**: `{"address":"123 Main St"` -H "Content-Type: application/json"\` ? expect 400 Bad Request and �Malformed JSON�
-- **Invalid field type (number instead of string)**: `{"address":12345} -H "Content-Type: application/json"` ? expect 400 Bad Request and �Address must be a string�
-- **SQL?injection payload in address**: `{"address":"123 Main St; DROP TABLE users;"} -H "Content-Type: application/json"` ? expect 400 Bad Request or input sanitized and rejected
-- **Address with special characters**: `{"address":"45B Baker Street, Apt #2A"} -H "Content-Type: application/json"` ? expect 200 OK and correctly parsed address
-- **International/multilingual address**: `{"address":"????? ??????, 10, ??????, ??????"} -H "Content-Type: application/json"` ? expect 200 OK and localized fields returned
-- **Partial address (missing city or zip)**: `{"address":"742 Evergreen Terrace"} -H "Content-Type: application/json"` ? expect 422 Unprocessable Entity and �Incomplete address�
-- **GET lookup of existing address**: `GET /api/addresses?address=221B%20Baker%20St -H "Accept: application/json"` ? expect 200 OK with matching address details
-- **GET lookup of non-existent address**: `GET /api/addresses?address=NoSuchPlace%20123 -H "Accept: application/json"` ? expect 404 Not Found and error �Address not found�
-
+- **Valid address**: `{"address":"1600 Amphitheatre Parkway, Mountain View, CA"} -H "Content-Type: application/json"` → expect 200 OK and parsed address object in response
+- **Non-existent address**: `{"address":"1234 ThisStreet DoesNotExist, ZZ"} -H "Content-Type: application/json"` → expect 422 Unprocessable Entity with error “Address not found”
+- **Missing “address” field**: `{}` -H "Content-Type: application/json" → expect 400 Bad Request and validation error mentioning “address is required”
+- **Empty address string**: `{"address":""} -H "Content-Type: application/json"` → expect 400 Bad Request and “Address cannot be empty”
+- **Whitespace-only address**: `{"address":"    "} -H "Content-Type: application/json"` → expect 400 Bad Request and “Address cannot be blank”
+- **Overly long address (>255 chars)**: `{"address":"<256-char string>"} -H "Content-Type: application/json"` → expect 413 Payload Too Large or 400 Bad Request with “Address too long”
+- **Malformed JSON**: `{"address":"123 Main St"` -H "Content-Type: application/json"\` → expect 400 Bad Request and “Malformed JSON”
+- **Invalid field type (number instead of string)**: `{"address":12345} -H "Content-Type: application/json"` → expect 400 Bad Request and “Address must be a string”
+- **SQL‐injection payload in address**: `{"address":"123 Main St; DROP TABLE users;"} -H "Content-Type: application/json"` → expect 400 Bad Request or input sanitized and rejected
+- **Address with special characters**: `{"address":"45B Baker Street, Apt #2A"} -H "Content-Type: application/json"` → expect 200 OK and correctly parsed address
+- **International/multilingual address**: `{"address":"улица Ленина, 10, Москва, Россия"} -H "Content-Type: application/json"` → expect 200 OK and localized fields returned
+- **Partial address (missing city or zip)**: `{"address":"742 Evergreen Terrace"} -H "Content-Type: application/json"` → expect 422 Unprocessable Entity and “Incomplete address”
+- **GET lookup of existing address**: `GET /api/addresses?address=221B%20Baker%20St -H "Accept: application/json"` → expect 200 OK with matching address details
+- **GET lookup of non-existent address**: `GET /api/addresses?address=NoSuchPlace%20123 -H "Accept: application/json"` → expect 404 Not Found and error “Address not found”
 ---
 
 ### Additional Resources
