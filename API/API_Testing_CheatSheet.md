@@ -245,3 +245,20 @@ This cheat-sheet is designed to serve as a quick reference guide for testing API
 - Data Contracts:
 	- Ensure data contracts include detailed definitions of each field, indicating which are mandatory and which are optional. Use JSON Schema or similar tools for robust contract validation.
 ---
+
+## API CheatSheet CSV Files
+This Cheat Sheet is now available as a <a href="(API_Testing_-_Complete_Test_Suites.zip" download>downloadable zip file</a> that contains all of the test suites for importing into Azure Test Plans.
+
+### Steps to Import
+- Extract the csv files
+- Open Azure test plans
+- Create a test plan
+- Create a new test suite with the title of the csv file (or your preferred variation)
+- Click into the test suite
+- Click the up arrow with a line across the tip which has the alt text "Import test cases from CSV/XLSX"
+- Select the relevant csv file
+- Click Import
+- The tests from the csv file should now be imported with a unique id pertinent to your project, as well as the project name and your name.
+- That's it!
+- Rinse and repeat until you have all of the csv files imported that you want.
+
