@@ -53,3 +53,20 @@ When the message is submitted
 Then the message should be rejected
 And the attempt should be logged as unauthorized","
 ",,,,,,
+"76163","Test Case","❌ Message size exceeds limit",,,,,"Not Automated","Love2shop","Mark Nicoll (CTR) <marknicoll@paypoint.com>","Ready","Service Bus Test"
+,,,"1","Given a message larger than 256 KB is sent to a queue
+When the message is submitted
+Then the Service Bus should reject the message
+And an error should be logged","
+",,,,,,
+"76164","Test Case","❌ Deserialization failure in consumer",,,,,"Not Automated","Love2shop","Mark Nicoll (CTR) <marknicoll@paypoint.com>","Ready","Service Bus Test"
+,,,"1","Given a message with corrupted or incompatible JSON payload is sent
+When the consumer attempts to deserialize the message
+Then an error should be thrown
+And the message should be moved to the dead-letter queue","
+",,,,,,
+"76166","Test Case","✅ Dead-letter message replay",,,,,"Not Automated","Love2shop","Mark Nicoll (CTR) <marknicoll@paypoint.com>","Ready","Service Bus Test"
+,,,"1","Given a message is in the dead-letter queue
+When the message is reprocessed and resent to the original queue
+Then the consumer should successfully receive and process the message","
+",,,,,,
