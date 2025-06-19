@@ -1,0 +1,55 @@
+﻿ID,Work Item Type,Title,Test Step,Step Action,Step Expected,Automated Test Name,Automation Status,Area Path,Assigned To,State,Tags
+"76149","Test Case","✅ Message is consumed",,,,,"Not Automated","Love2shop","Mark Nicoll (CTR) <marknicoll@paypoint.com>","Ready","Service Bus Test"
+,,,"1","Given a message producer is connected to the Service Bus queue
+When a valid message is sent to the queue
+Then the message should be received by the consumer
+And the message content should be processed successfully","
+",,,,,,
+"76151","Test Case","✅ Messages received in order of being sent",,,,,"Not Automated","Love2shop","Mark Nicoll (CTR) <marknicoll@paypoint.com>","Ready","Service Bus Test"
+,,,"1","Given the queue is empty
+When 5 valid messages are sent to the queue in sequence
+Then all 5 messages should be received by the consumer in the order they were sent","
+",,,,,,
+,,,"2","
+",,,,,,,
+"76154","Test Case","✅ Message with specific properties (e.g., correlation ID)",,,,,"Not Automated","Love2shop","Mark Nicoll (CTR) <marknicoll@paypoint.com>","Ready","Service Bus Test"
+,,,"1","Given a message with a correlation ID is sent to the queue
+When the consumer receives the message
+Then the consumer should log the correlation ID
+And process the message without errors","
+",,,,,,
+"76155","Test Case","✅ Message with delay (Scheduled Message)",,,,,"Not Automated","Love2shop","Mark Nicoll (CTR) <marknicoll@paypoint.com>","Ready","Service Bus Test"
+,,,"1","Given a message is scheduled to be sent to the queue 30 seconds in the future
+When 30 seconds have passed
+Then the consumer should receive and process the message","
+",,,,,,
+"76157","Test Case","❌ Invalid message schema",,,,,"Not Automated","Love2shop","Mark Nicoll (CTR) <marknicoll@paypoint.com>","Ready","Service Bus Test"
+,,,"1","Given a message with an invalid schema is sent to the queue
+When the consumer attempts to process the message
+Then the consumer should log a validation error
+And move the message to the dead-letter queue","
+",,,,,,
+"76158","Test Case","❌ Expired TTL (Time to Live)",,,,,"Not Automated","Love2shop","Mark Nicoll (CTR) <marknicoll@paypoint.com>","Ready","Service Bus Test"
+,,,"1","Given a message is sent with a TTL of 5 seconds
+When the message is not consumed within 5 seconds
+Then the message should expire
+And the message should not be delivered to the consumer","
+",,,,,,
+"76159","Test Case","❌ Unreachable Service Bus",,,,,"Not Automated","Love2shop","Mark Nicoll (CTR) <marknicoll@paypoint.com>","Ready","Service Bus Test"
+,,,"1","Given the Service Bus is unreachable due to a network issue
+When the producer tries to send a message
+Then the message should not be sent
+And an error should be logged by the producer","
+",,,,,,
+"76160","Test Case","❌ Consumer throws unhandled exception",,,,,"Not Automated","Love2shop","Mark Nicoll (CTR) <marknicoll@paypoint.com>","Ready","Service Bus Test"
+,,,"1","Given a valid message is sent to the queue
+When the consumer throws an unhandled exception while processing
+Then the message should be retried up to the max delivery count
+And then moved to the dead-letter queue","
+",,,,,,
+"76161","Test Case","❌ Unauthorized sender",,,,,"Not Automated","Love2shop","Mark Nicoll (CTR) <marknicoll@paypoint.com>","Ready","Service Bus Test"
+,,,"1","Given a sender with invalid credentials attempts to send a message
+When the message is submitted
+Then the message should be rejected
+And the attempt should be logged as unauthorized","
+",,,,,,
