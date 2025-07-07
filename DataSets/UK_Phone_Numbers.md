@@ -1,6 +1,6 @@
 # Overview
 
-The phone numbers in this documentareusing the British TV & Movie telephone ranges. This means that you can use them safely for testing without a customer inadvertently being phoned or receiving a text message.
+The phone numbers in this document are using the British TV & Movie telephone ranges. This means that you can use them safely for testing with confidence and knowing you are not inadvertently using a live number.
 
 ## The Numbers
 
